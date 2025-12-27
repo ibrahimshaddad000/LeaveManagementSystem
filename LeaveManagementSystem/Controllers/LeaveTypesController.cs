@@ -1,37 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LeaveManagementSystem.Data;
-using AutoMapper;
+﻿using AutoMapper;
 using LeaveManagementSystem.Models.LeaveTypes;
 using LeaveManagementSystem.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagementSystem.Controllers;
 
-public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper, ILeaveTypeService _leavetypeservice ) : Controller
+public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper, ILeaveTypeService _leavetypeservice) : Controller
 {
 
+
+
     private const string NameExistsErrorMessage = "The name you have entered already exists";
-    
+
 
     // GET: LeaveTypes
-    
+
+    [Authorize(Roles = Roles.Administrator)]
+
     public async Task<IActionResult> Index()
     {
         var viewData = await _leavetypeservice.GetAll();
-        return View( viewData);
+        return View(viewData);
     }
 
     // GET: LeaveTypes/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var leaveType = await _leavetypeservice.Get<LeaveTypeReadOnlyVM>(id.Value);
 
-        if(leaveType == null)
+        if (leaveType == null)
         {
             return NotFound();
         }
@@ -62,13 +64,13 @@ public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper
 
         if (ModelState.IsValid)
         {
-           await _leavetypeservice.Create(leaveTypeCreate);
+            await _leavetypeservice.Create(leaveTypeCreate);
             return RedirectToAction(nameof(Index));
         }
         return View(leaveTypeCreate);
     }
 
-    
+
     // GET: LeaveTypes/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
@@ -104,7 +106,7 @@ public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper
 
         if (await _leavetypeservice.CheckIfLeaveTypeNameExistsForEdit(leaveTypeEdit))
         {
-            ModelState.AddModelError(nameof(leaveTypeEdit.Name), NameExistsErrorMessage );
+            ModelState.AddModelError(nameof(leaveTypeEdit.Name), NameExistsErrorMessage);
         }
 
         if (ModelState.IsValid)
@@ -129,7 +131,7 @@ public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper
         return View(leaveTypeEdit);
     }
 
-   
+
 
     // GET: LeaveTypes/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -140,7 +142,7 @@ public class LeaveTypesController(ApplicationDbContext _context, IMapper _mapper
         }
 
         var leaveType = await _leavetypeservice.Get<LeaveTypeReadOnlyVM>(id.Value);
-            
+
         if (leaveType == null)
         {
             return NotFound();

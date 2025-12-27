@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/LeaveManagementSystem/Data/Migrations/ApplicationDbContextModelSnapshot.cs
+/LeaveManagementSystem/Data/Migrations/00000000000000_CreateIdentitySchema.cs
+/LeaveManagementSystem/Data/Migrations/00000000000000_CreateIdentitySchema.Designer.cs
+/LeaveManagementSystem/Data/Migrations/20251212122253_AddingLeaveTypesTable.cs
+/LeaveManagementSystem/Data/Migrations/20251212122253_AddingLeaveTypesTable.Designer.cs
+/LeaveManagementSystem/Data/Migrations/20251212163355_ChangedNumberOfDaysPropertyToDays.cs
+/LeaveManagementSystem/Data/Migrations/20251212163355_ChangedNumberOfDaysPropertyToDays.Designer.cs
